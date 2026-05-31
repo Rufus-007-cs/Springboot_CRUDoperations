@@ -23,7 +23,7 @@ public class ProductService {
                 return product;
             }
         }
-        return (new Product(100,"No Item",0));//handles the no product error
+        return (new Product(100,"No Item",0));
     }
 
     public void addProduct(Product product) {
