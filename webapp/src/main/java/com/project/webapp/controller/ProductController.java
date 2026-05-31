@@ -20,12 +20,12 @@ public class ProductController {
 
         }
 
-        @GetMapping("/products/{prodId}")//{prodId} maps the value to the variable
-        public Product getProductById(@PathVariable int prodId){//pathVar shows to where the value must be mapped
+        @GetMapping("/products/{prodId}")
+        public Product getProductById(@PathVariable int prodId){
             return productService.getProductById(prodId);
         }
         @PostMapping("/products")
-        public void addProduct(@RequestBody Product product){//req bod when json sent from client to server
+        public void addProduct(@RequestBody Product product){
             productService.addProduct(product);
         }
         @PutMapping("/product")
