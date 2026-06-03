@@ -1,6 +1,7 @@
 package com.project.webapp.service;
 
 import com.project.webapp.model.Product;
+import com.project.webapp.repo.ProductRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,43 +10,29 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    List<Product> products = new ArrayList<>(Arrays.asList(
-            new Product(101,"mac",500000),
-            new Product(102,"playstation",40000)));
+    private ProductRepo productRepo;
+    public ProductService(ProductRepo productRepo){
+        this.productRepo = productRepo;
+    }
 
     public List<Product> getProducts(){
-        return products;
+        return productRepo.findAll();
 
     }
     public Product getProductById(int prodId) {
-        for(Product product:products) {
-            if (product.getProdId() == prodId) {
-                return product;
-            }
-        }
-        return (new Product(100,"No Item",0));//handles the no product error
+       return productRepo.findById(prodId).orElse(new Product(0,"novalue",0));
     }
 
     public void addProduct(Product product) {
-       products.add(product);
+        productRepo.save(product);
     }
 
     public void updateProduct(Product product) {
-        for(Product prod:products){
-            if(prod.getProdId()== product.getProdId()){
-                prod.setPrice(product.getPrice());
-                prod.setProdName(product.getProdName());
-                return;
-            }
-        }
+         productRepo.save(product);//same as add
     }
 
     public void deleteProductById(int prodId) {
-        for(Product prod: products){
-            if(prod.getProdId() == prodId){
-                products.remove(prod);
-                return;
-            }
-        }
+         productRepo.deleteById(prodId);
     }
 }
+
